@@ -1,6 +1,6 @@
 # OASIS - Open Architecture Security Interception Suite
 
-[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+[![Python 3.11/3.12](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Tests](https://img.shields.io/badge/tests-269%20passing-brightgreen.svg)](tests/)
 ## Table of Contents
@@ -61,7 +61,7 @@ A comprehensive, open-source penetration testing platform designed as a modern a
 
 ## 📋 Requirements
 
-- Python 3.11 or higher
+- Python 3.11/3.12
 - 4GB RAM minimum (8GB recommended)
 - Linux, macOS, or Windows
 
@@ -81,24 +81,8 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 # Install OASIS
 pip install -e .
 
-# Verify installation
-python scripts/verify_installation.py
-```
-
-### Alternative Installation Methods
-
-**Install from PyPI** (when published):
-```bash
-pip install oasis-pentest
-```
-
-**Development Setup** (with dev dependencies):
-```bash
-# Using pip
-pip install -e ".[dev]"
-
-# Or using Poetry
-poetry install
+# Run oasis
+oasis
 ```
 
 ## 🎯 Quick Start
@@ -179,7 +163,7 @@ pip install --force-reinstall -e .
 
 **Import errors?**
 ```bash
-# Check Python version (requires 3.11+)
+# Check Python version (requires 3.11/3.12)
 python --version
 
 # Reinstall dependencies
@@ -275,28 +259,6 @@ OASIS implements enterprise-grade security features:
 
 We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
-### Development Setup
-
-```bash
-# Install development dependencies
-pip install -e ".[dev]"
-
-# Or using Poetry
-poetry install
-
-# Install pre-commit hooks
-pre-commit install
-
-# Run tests before committing
-make test
-
-# Format code
-make format
-
-# Run linters
-make lint
-```
-
 ## 📊 Performance
 
 OASIS is designed for high performance:
@@ -308,23 +270,6 @@ OASIS is designed for high performance:
 - **Async I/O**: Non-blocking operations throughout
 
 See [docs/reports/PRODUCTION_READINESS_REPORT.md](docs/reports/PRODUCTION_READINESS_REPORT.md) for detailed performance metrics.
-
-## 🆚 Comparison with Burp Suite
-
-| Feature | Burp Suite | OASIS | Status |
-|---------|-----------|-------|--------|
-| HTTP/HTTPS Proxy | ✅ | ✅ | Complete |
-| Vulnerability Scanner | ✅ | ✅ | Complete |
-| Request Repeater | ✅ | ✅ | Complete |
-| Intruder | ✅ | ✅ | Complete |
-| Decoder | ✅ | ✅ | Complete |
-| Sequencer | ✅ | ✅ | Complete |
-| Collaborator | ✅ | ✅ | Complete |
-| Extensions | ✅ | ✅ | Complete |
-| **Async I/O** | ⚠️ | ✅ | **OASIS Superior** |
-| **REST API** | ⚠️ | ✅ | **OASIS Superior** |
-| **CLI Interface** | ⚠️ | ✅ | **OASIS Superior** |
-| **Open Source** | ❌ | ✅ | **OASIS Advantage** |
 
 ## 📝 License
 
@@ -341,20 +286,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **Documentation**: [docs/](docs/)
 - **Examples**: [examples/](examples/)
-- **Issues**: [GitHub Issues](https://github.com/yourusername/oasis/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/oasis/discussions)
+- **Issues**: [GitHub Issues](https://github.com/JAEKts/oasis/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/JAEKts/oasis/discussions)
 
-## 🗺️ Roadmap
-
-- [ ] Machine Learning-powered vulnerability detection
-- [ ] Cloud service scanning integration
-- [ ] Mobile app security testing
-- [ ] Real-time team collaboration features
-- [ ] Enhanced API security testing
-
----
-
-**Built with ❤️ by the OASIS Team**
 ---
 
 **Last Updated**: January 05, 2026
