@@ -1,0 +1,352 @@
+openapi: 3.0.3
+info:
+  title: OASIS API
+  description: |
+    # OASIS REST API
+    
+    The OASIS REST API provides programmatic access to all OASIS functionality for automation and external tool integration.
+    
+    ## Features
+    
+    - **Project Management**: Create, update, and manage penetration testing projects
+    - **Traffic Analysis**: Access captured HTTP/HTTPS traffic flows
+    - **Vulnerability Scanning**: Trigger and retrieve vulnerability scan results
+    - **Request Manipulation**: Send and modify HTTP requests via Repeater
+    - **Automated Attacks**: Configure and execute Intruder attacks
+    - **Data Export**: Export findings and reports in various formats
+    
+    ## Authentication
+    
+    API authentication is handled via API keys. Include your API key in the `X-API-Key` header:
+    
+    ```
+    X-API-Key: your-api-key-here
+    ```
+    
+    ## Rate Limiting
+    
+    API requests are rate-limited to prevent abuse:
+    - 100 requests per minute for authenticated users
+    - 10 requests per minute for unauthenticated users
+    
+    ## Webhooks
+    
+    OASIS supports webhooks for real-time notifications:
+    - New vulnerability findings
+    - Scan completion
+    - Collaborator interactions
+    
+    Configure webhooks in your project settings.
+    
+  version: 0.1.0
+  contact:
+    name: OASIS Team
+    email: team@oasis-pentest.org
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:8000/api/v1
+    description: Local development server
+  - url: https://api.oasis-pentest.org/v1
+    description: Production server
+
+security:
+  - ApiKeyAuth: []
+
+tags:
+  - name: projects
+    description: Project management operations
+  - name: flows
+    description: HTTP traffic flow operations
+  - name: findings
+    description: Vulnerability finding operations
+  - name: scanner
+    description: Vulnerability scanning operations
+  - name: repeater
+    description: Request repeater operations
+  - name: intruder
+    description: Automated attack operations
+
+paths:
+  /projects:
+    get:
+      tags:
+        - projects
+      summary: List all projects
+      description: Returns a list of all penetration testing projects
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+    
+    post:
+      tags:
+        - projects
+      summary: Create a new project
+      description: Creates a new penetration testing project
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectCreate'
+      responses:
+        '201':
+          description: Project created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '400':
+          description: Invalid request data
+  
+  /projects/{projectId}:
+    get:
+      tags:
+        - projects
+      summary: Get project by ID
+      description: Retrieves detailed information about a specific project
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '404':
+          description: Project not found
+  
+  /{projectId}/flows:
+    get:
+      tags:
+        - flows
+      summary: List HTTP flows
+      description: Returns captured HTTP request/response flows for the specified project
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 1000
+            default: 100
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HTTPFlow'
+  
+  /{projectId}/findings:
+    get:
+      tags:
+        - findings
+      summary: List vulnerability findings
+      description: Returns vulnerability findings for the specified project
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: severity
+          in: query
+          schema:
+            type: string
+            enum: [critical, high, medium, low, info]
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Finding'
+  
+  /scanner/scan:
+    post:
+      tags:
+        - scanner
+      summary: Start a vulnerability scan
+      description: Initiates a vulnerability scan on captured traffic
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScanRequest'
+      responses:
+        '200':
+          description: Scan completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScanResponse'
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+  
+  schemas:
+    Project:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        settings:
+          $ref: '#/components/schemas/ProjectSettings'
+    
+    ProjectCreate:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        settings:
+          $ref: '#/components/schemas/ProjectSettings'
+    
+    ProjectSettings:
+      type: object
+      properties:
+        target_scope:
+          type: array
+          items:
+            type: string
+        excluded_scope:
+          type: array
+          items:
+            type: string
+    
+    HTTPFlow:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        request:
+          $ref: '#/components/schemas/HTTPRequest'
+        response:
+          $ref: '#/components/schemas/HTTPResponse'
+        created_at:
+          type: string
+          format: date-time
+    
+    HTTPRequest:
+      type: object
+      properties:
+        method:
+          type: string
+        url:
+          type: string
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+        body:
+          type: string
+          format: byte
+    
+    HTTPResponse:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+        body:
+          type: string
+          format: byte
+        duration_ms:
+          type: integer
+    
+    Finding:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        vulnerability_type:
+          type: string
+        severity:
+          type: string
+          enum: [critical, high, medium, low, info]
+        title:
+          type: string
+        description:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+    
+    ScanRequest:
+      type: object
+      required:
+        - project_id
+      properties:
+        project_id:
+          type: string
+          format: uuid
+        enabled_checks:
+          type: array
+          items:
+            type: string
+        scan_intensity:
+          type: string
+          enum: [light, normal, thorough]
+    
+    ScanResponse:
+      type: object
+      properties:
+        findings_count:
+          type: integer
+        findings:
+          type: array
+          items:
+            $ref: '#/components/schemas/Finding'

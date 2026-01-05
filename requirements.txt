@@ -1,4 +1,22 @@
-pyqt5
-qasync
-mitmproxy
-requests
+# Core dependencies
+PyQt6>=6.6.0
+requests>=2.31.0
+aiohttp>=3.9.0
+psutil>=5.9.0
+
+# Security and crypto
+cryptography>=42.0.0
+argon2-cffi>=23.1.0
+
+# Data validation
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
+
+# Proxy functionality - using compatible versions
+# Note: mitmproxy may have issues with Python 3.13
+# Using specific versions that work better
+mitmproxy>=10.1.0; python_version < "3.13"
+
+# Scientific computing (optional)
+numpy>=1.24.0; python_version < "3.13"
+scipy>=1.11.0; python_version < "3.13"
