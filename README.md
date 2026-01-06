@@ -252,8 +252,6 @@ OASIS implements enterprise-grade security features:
 - **Encryption in Transit**: TLS 1.3 for all network communications
 - **Secure Key Management**: Key derivation and rotation
 - **Audit Logging**: Comprehensive logging of all actions
-- **Authentication**: Local and enterprise (LDAP, SAML, OAuth)
-- **Compliance**: PCI DSS, HIPAA, SOX compatible
 
 ## 🤝 Contributing
 
