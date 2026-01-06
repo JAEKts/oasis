@@ -4,14 +4,12 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Tests](https://img.shields.io/badge/tests-269%20passing-brightgreen.svg)](tests/)
 ## Table of Contents
-
+- [🔧 Installation](#-installation)
+  - [Quick Install](#quick-install)
 - [🚀 Features](#-features)
   - [Core Capabilities](#core-capabilities)
   - [Advanced Features](#advanced-features)
 - [📋 Requirements](#-requirements)
-- [🔧 Installation](#-installation)
-  - [Quick Install](#quick-install)
-  - [Alternative Installation Methods](#alternative-installation-methods)
 - [🎯 Quick Start](#-quick-start)
   - [1. Launch OASIS](#1-launch-oasis)
     - [GUI Application (Recommended)](#gui-application-recommended)
