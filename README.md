@@ -35,6 +35,20 @@
 
 A comprehensive, open-source penetration testing platform designed as a modern alternative to Burp Suite. Built with Python 3.11+, featuring async I/O, property-based testing, and enterprise-grade security.
 
+## 🔧 Installation
+
+### Quick Install
+
+```bash
+git clone https://github.com/JAEKTS/oasis.git;
+cd oasis;
+python -m venv venv;
+source venv/bin/activate;
+pip install -e .;
+oasis
+```
+On Windows: venv\Scripts\activate
+
 ## 🚀 Features
 
 ### Core Capabilities
@@ -62,26 +76,6 @@ A comprehensive, open-source penetration testing platform designed as a modern a
 - Python 3.11/3.12
 - 4GB RAM minimum (8GB recommended)
 - Linux, macOS, or Windows
-
-## 🔧 Installation
-
-### Quick Install
-
-```bash
-# Clone the repository
-git clone https://github.com/JAEKTS/oasis.git
-cd oasis
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install OASIS
-pip install -e .
-
-# Run oasis
-oasis
-```
 
 ## 🎯 Quick Start
 
